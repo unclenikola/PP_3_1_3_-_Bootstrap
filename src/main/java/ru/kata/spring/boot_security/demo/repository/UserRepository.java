@@ -1,8 +1,8 @@
-package ru.unclenikola.springboot.PP_3_1_1_Spring_MVC_Hibernate.repository;
+package ru.kata.spring.boot_security.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.unclenikola.springboot.PP_3_1_1_Spring_MVC_Hibernate.model.User;
+import ru.kata.spring.boot_security.demo.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-//    List<User> id(Long id);
+    User findByUsername(String username);
 }

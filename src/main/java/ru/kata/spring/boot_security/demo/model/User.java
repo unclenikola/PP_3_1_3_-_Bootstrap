@@ -37,6 +37,8 @@ public class User implements UserDetails {
     )
     private Set<Role> roles;
 
+    public User() {
+    }
     // Геттеры и сеттеры
 
     public Long getId() {

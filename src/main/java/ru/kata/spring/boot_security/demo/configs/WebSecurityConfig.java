@@ -21,23 +21,23 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorizeRequests ->
+                .authorizeRequests(authorizeRequests -> // Используем authorizeRequests вместо authorizeHttpRequests
                         authorizeRequests
-                                .antMatchers("/", "/index").permitAll()
-                                .antMatchers("/admin/**").hasRole("ADMIN")
-                                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-                                .anyRequest().authenticated()
+                                .antMatchers("/", "/index").permitAll() // Разрешить доступ всем
+                                .antMatchers("/admin/**").hasRole("ADMIN") // Только для админов
+                                .antMatchers("/user").hasAnyRole("USER", "ADMIN") // Для пользователей и админов
+                                .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
                 )
                 .formLogin(formLogin ->
                         formLogin
-                                .successHandler(successUserHandler)
-                                .permitAll()
+                                .successHandler(successUserHandler) // Перенаправление после успешного входа
+                                .permitAll() // Разрешить доступ к форме входа всем
                 )
                 .logout(logout ->
                         logout
-                                .logoutUrl("/logout")
-                                .logoutSuccessUrl("/")
-                                .permitAll()
+                                .logoutUrl("/logout") // URL для выхода
+                                .logoutSuccessUrl("/") // Перенаправление после выхода
+                                .permitAll() // Разрешить доступ к logout всем
                 );
 
         return http.build();
@@ -45,6 +45,6 @@ public class WebSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); // Шифрование паролей
     }
 }

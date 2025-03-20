@@ -17,7 +17,9 @@ public class Role implements GrantedAuthority {
     public Role(String roleAdmin) {
     }
 
-    // Геттеры и сеттеры
+    public Role() {
+    }
+// Геттеры и сеттеры
 
     public Long getId() {
         return id;

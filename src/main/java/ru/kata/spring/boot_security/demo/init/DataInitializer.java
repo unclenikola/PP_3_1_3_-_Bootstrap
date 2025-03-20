@@ -50,5 +50,18 @@ public class DataInitializer implements CommandLineRunner {
             admin.setRoles(Collections.singleton(adminRole)); // Назначаем роль ADMIN
             userRepository.save(admin);
         }
+
+        // Создаем пользователя user, если он еще не существует
+        User user = userRepository.findByUsername("user");
+        if (user == null) {
+            user = new User();
+            user.setUsername("user");
+            user.setPassword(passwordEncoder.encode("user")); // Шифруем пароль
+            user.setName("User");
+            user.setLastName("Userov");
+            user.setAge(25);
+            user.setRoles(Collections.singleton(userRole)); // Назначаем роль USER
+            userRepository.save(user);
+        }
     }
 }

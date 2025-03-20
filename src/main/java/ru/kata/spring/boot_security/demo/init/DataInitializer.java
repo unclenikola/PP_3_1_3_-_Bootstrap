@@ -8,6 +8,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 
 @Component
@@ -24,6 +25,7 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         // Создаем роли, если они еще не существуют
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");

@@ -21,24 +21,29 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorizeRequests -> // Используем authorizeRequests вместо authorizeHttpRequests
+                .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .antMatchers("/", "/index").permitAll() // Разрешить доступ всем
-                                .antMatchers("/admin/**").hasRole("ADMIN") // Только для админов
-                                .antMatchers("/user").hasAnyRole("USER", "ADMIN") // Для пользователей и админов
-                                .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
+                                .antMatchers("/", "/index", "/login").permitAll()
+                                .antMatchers("/admin/**").hasRole("ADMIN")
+                                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                                .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
                         formLogin
-                                .successHandler(successUserHandler) // Перенаправление после успешного входа
-                                .permitAll() // Разрешить доступ к форме входа всем
+                                .loginPage("/login")
+                                .loginProcessingUrl("/login")
+                                .successHandler(successUserHandler)
+                                .permitAll()
                 )
                 .logout(logout ->
                         logout
-                                .logoutUrl("/logout") // URL для выхода
-                                .logoutSuccessUrl("/") // Перенаправление после выхода
-                                .permitAll() // Разрешить доступ к logout всем
-                );
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
+                                .permitAll()
+                )
+                .csrf().disable(); // Отключение CSRF для упрощения отладки
 
         return http.build();
     }

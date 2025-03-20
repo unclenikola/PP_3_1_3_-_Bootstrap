@@ -7,4 +7,5 @@ public interface RoleService {
     List<Role> getAllRoles();
     Role findByName(String name);
     void saveRole(Role role);
+    Role findById(Long id);
 }

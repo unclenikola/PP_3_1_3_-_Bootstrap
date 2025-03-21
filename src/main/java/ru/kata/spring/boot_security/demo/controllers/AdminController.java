@@ -53,7 +53,7 @@ public class AdminController {
         return "edit";
     }
 
-    @PatchMapping("/{id}")
+    @PostMapping("/{id}")
     public String updateUser(@PathVariable("id") Long id,
                              @ModelAttribute("user") User user,
                              @RequestParam("roles") List<Long> roleIds) {

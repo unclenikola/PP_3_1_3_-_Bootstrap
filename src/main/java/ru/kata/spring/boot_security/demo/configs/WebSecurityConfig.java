@@ -34,16 +34,11 @@ public class WebSecurityConfig {
                                 .successHandler(successUserHandler) // Перенаправление после успешного входа
                                 .permitAll() // Разрешить доступ к форме входа всем
                 )
-//                .logout(logout ->
-//                        logout
-//                                .logoutUrl("/logout") // URL для выхода
-//                                .logoutSuccessUrl("/") // Перенаправление после выхода
-//                                .permitAll() // Разрешить доступ к logout всем
-//                );
+
                 .logout(logout ->
                         logout
                                 .logoutUrl("/logout") // URL для выхода
-                                .logoutSuccessUrl("/") // Перенаправление после выхода
+                                .logoutSuccessUrl("/login") // Перенаправление после выхода
                                 .invalidateHttpSession(true) // Уничтожение сессии
                                 .deleteCookies("JSESSIONID") // Удаление cookies
                                 .permitAll() // Разрешить доступ всем

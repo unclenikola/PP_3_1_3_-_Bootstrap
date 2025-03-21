@@ -30,13 +30,21 @@
       <span th:each="role : ${user.roles}" th:text="${role.name} + ' '"></span>
     </td>
     <td>
-      <a th:href="@{/admin/{id}/edit(id=${user.id})}">Редактировать</a>
-      <a th:href="@{/admin/{id}/delete(id=${user.id})}">Удалить</a>
+      <form th:action="@{/admin/{id}/edit(id=${user.id})}" th:method="get" style="display: inline;">
+        <button type="submit">Редактировать</button>
+      </form>
+      <form th:action="@{/admin/{id}(id=${user.id})}" th:method="delete" style="display: inline;">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit">Удалить</button>
+      </form>
     </td>
+  </tr>
   </tr>
   </tbody>
 </table>
-<a th:href="@{/admin/new}">Добавить пользователя</a>
+<form th:action="@{/admin/new}" th:method="get" style="display: inline;">
+  <button type="submit">Добавить пользователя</button>
+</form>
 <form th:action="@{/logout}" method="post">
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
   <button type="submit">Выйти</button>

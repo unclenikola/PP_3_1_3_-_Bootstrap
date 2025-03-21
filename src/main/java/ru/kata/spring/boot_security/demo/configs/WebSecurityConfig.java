@@ -24,7 +24,7 @@ public class WebSecurityConfig {
         http
                 .authorizeRequests(authorizeRequests -> // Используем authorizeRequests вместо authorizeHttpRequests
                         authorizeRequests
-                                .antMatchers("/", "/index").permitAll() // Разрешить доступ всем
+                                .antMatchers("/", "/admin").permitAll() // Разрешить доступ всем
                                 .antMatchers("/admin/**").hasRole("ADMIN") // Только для админов
                                 .antMatchers("/user").hasAnyRole("USER", "ADMIN") // Для пользователей и админов
                                 .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
@@ -34,16 +34,11 @@ public class WebSecurityConfig {
                                 .successHandler(successUserHandler) // Перенаправление после успешного входа
                                 .permitAll() // Разрешить доступ к форме входа всем
                 )
-//                .logout(logout ->
-//                        logout
-//                                .logoutUrl("/logout") // URL для выхода
-//                                .logoutSuccessUrl("/") // Перенаправление после выхода
-//                                .permitAll() // Разрешить доступ к logout всем
-//                );
+
                 .logout(logout ->
                         logout
                                 .logoutUrl("/logout") // URL для выхода
-                                .logoutSuccessUrl("/") // Перенаправление после выхода
+                                .logoutSuccessUrl("/login") // Перенаправление после выхода
                                 .invalidateHttpSession(true) // Уничтожение сессии
                                 .deleteCookies("JSESSIONID") // Удаление cookies
                                 .permitAll() // Разрешить доступ всем

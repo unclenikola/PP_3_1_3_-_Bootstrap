@@ -29,6 +29,9 @@ public class User implements UserDetails {
     @Column(name = "age")
     private int age;
 
+    @Column(name = "mail")
+    private String mail;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -39,7 +42,25 @@ public class User implements UserDetails {
 
     public User() {
     }
+    private String rolesString;
+
+    public User(String user1, String password) {
+    }
+
     // Геттеры и сеттеры
+
+
+    public String getRolesString() {
+        return rolesString;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
     public Long getId() {
         return id;
@@ -49,18 +70,8 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -99,6 +110,19 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public void setRolesString(String rolesString) {
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -123,4 +147,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

@@ -49,6 +49,7 @@ public class DataInitializer implements CommandLineRunner {
             admin.setName("Admin");
             admin.setLastName("Adminov");
             admin.setAge(30);
+            admin.setMail("admin@mail.com");
             admin.setRoles(Collections.singleton(adminRole)); // Назначаем роль ADMIN
             userRepository.save(admin);
         }
@@ -62,6 +63,7 @@ public class DataInitializer implements CommandLineRunner {
             user.setName("User");
             user.setLastName("Userov");
             user.setAge(25);
+            user.setMail("user@mail.com");
             user.setRoles(Collections.singleton(userRole)); // Назначаем роль USER
             userRepository.save(user);
         }

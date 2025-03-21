@@ -14,11 +14,18 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
+//    @Override
+//    public List<Role> getAllRoles() {
+//        return roleService.getAllRoles(); // Используйте RoleService для получения ролей
+//    }
+
 
     @Override
     public List<User> getAllUsers() {
@@ -55,5 +62,10 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new RuntimeException("User not found with id: " + id);
         }
+    }
+
+    @Override
+    public Object getAllRoles() {
+        return null;
     }
 }

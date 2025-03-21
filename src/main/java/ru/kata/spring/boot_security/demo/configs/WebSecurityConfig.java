@@ -1,3 +1,4 @@
+
 package ru.kata.spring.boot_security.demo.configs;
 
 import org.springframework.context.annotation.Bean;
@@ -21,29 +22,32 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorizeRequests ->
+                .authorizeRequests(authorizeRequests -> // Используем authorizeRequests вместо authorizeHttpRequests
                         authorizeRequests
-                                .antMatchers("/", "/index", "/login").permitAll()
-                                .antMatchers("/admin/**").hasRole("ADMIN")
-                                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-                                .anyRequest().authenticated()
+                                .antMatchers("/", "/index").permitAll() // Разрешить доступ всем
+                                .antMatchers("/admin/**").hasRole("ADMIN") // Только для админов
+                                .antMatchers("/user").hasAnyRole("USER", "ADMIN") // Для пользователей и админов
+                                .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
                 )
                 .formLogin(formLogin ->
                         formLogin
-                                .loginPage("/login")
-                                .loginProcessingUrl("/login")
-                                .successHandler(successUserHandler)
-                                .permitAll()
+                                .successHandler(successUserHandler) // Перенаправление после успешного входа
+                                .permitAll() // Разрешить доступ к форме входа всем
                 )
+//                .logout(logout ->
+//                        logout
+//                                .logoutUrl("/logout") // URL для выхода
+//                                .logoutSuccessUrl("/") // Перенаправление после выхода
+//                                .permitAll() // Разрешить доступ к logout всем
+//                );
                 .logout(logout ->
                         logout
-                                .logoutUrl("/logout")
-                                .logoutSuccessUrl("/")
-                                .invalidateHttpSession(true)
-                                .deleteCookies("JSESSIONID")
-                                .permitAll()
-                )
-                .csrf().disable(); // Отключение CSRF для упрощения отладки
+                                .logoutUrl("/logout") // URL для выхода
+                                .logoutSuccessUrl("/") // Перенаправление после выхода
+                                .invalidateHttpSession(true) // Уничтожение сессии
+                                .deleteCookies("JSESSIONID") // Удаление cookies
+                                .permitAll() // Разрешить доступ всем
+                );
 
         return http.build();
     }

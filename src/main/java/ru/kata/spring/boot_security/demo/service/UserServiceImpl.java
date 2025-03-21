@@ -25,7 +25,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-
     @Override
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
@@ -33,15 +32,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // Шифруем пароль
         userRepository.save(user);
     }
 
     @Override
     public void updateUser(User user) {
         if (user.getPassword().isEmpty()) {
+            // Если пароль не изменен, оставляем старый пароль
             user.setPassword(userRepository.findById(user.getId()).get().getPassword());
         } else {
+            // Если пароль изменен, шифруем новый пароль
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         userRepository.save(user);

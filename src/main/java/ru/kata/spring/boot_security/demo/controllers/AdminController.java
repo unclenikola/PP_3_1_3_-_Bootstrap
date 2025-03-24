@@ -14,7 +14,6 @@
 //import java.util.Set;
 //import java.util.stream.Collectors;
 //
-//
 //@Controller
 //@RequestMapping("/admin")
 //public class AdminController {
@@ -54,7 +53,7 @@
 //        return "edit";
 //    }
 //
-//    @PostMapping("/{id}")
+//    @PatchMapping("/{id}")
 //    public String updateUser(@PathVariable("id") Long id,
 //                             @ModelAttribute("user") User user,
 //                             @RequestParam("roles") List<Long> roleIds) {
@@ -63,7 +62,7 @@
 //                .filter(Objects::nonNull)
 //                .collect(Collectors.toSet());
 //        user.setRoles(roles);
-//        userService.updateUser(id, user);
+//        userService.updateUser(user);
 //        return "redirect:/admin";
 //    }
 //
